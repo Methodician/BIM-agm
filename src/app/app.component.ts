@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { LatLng } from '@agm/core/services/google-maps-types';
 import * as fb from 'firebase';
+import { AgmPolygon } from '@agm/core/directives/polygon';
 
 @Component({
   selector: 'app-root',
@@ -13,33 +14,22 @@ export class AppComponent {
   lat: number = 51.678418;
   lng: number = 7.809007;
   markers: Observable<any>;
-
-  polyPath = [
-    {
-      lat: 45.505107,
-      lng: -122.746799
-    },
-    {
-      lat: 45.504910,
-      lng: -122.746016
-    },
-    {
-      lat: 45.504662,
-      lng: -122.746378
-    },
-    {
-      lat: 45.504466,
-      lng: -122.747389
-    }
-  ]
+  pathDoc: AngularFirestoreDocument<any>;
+  pathsCollection: Observable<any>;
+  path = [];
+  polyTest: AgmPolygon;
 
   constructor(private db: AngularFirestore) {
-
   }
 
   ngOnInit() {
     this.markers = this.db.collection('markers').valueChanges();
-
+    this.pathDoc = this.db.doc('polyPaths/path4');
+    this.pathsCollection = this.db.collection('polyPaths').valueChanges();
+    this.pathDoc.valueChanges().subscribe(path => {
+      if (path)
+        this.path = path.points;
+    })
   }
 
   ngAfterViewInit() {
@@ -55,9 +45,42 @@ export class AppComponent {
   }
 
   mapClick($e) {
-    console.log($e);
-    let geopoint = new fb.firestore.GeoPoint($e.coords.lat, $e.coords.lng);
-    this.db.collection('markers').add({ geopoint: geopoint });
+    this.path.push({
+      lat: $e.coords.lat,
+      lng: $e.coords.lng
+    });
+    this.pathDoc.set({ points: this.path });
+    // this.polyPath.push({
+    //   lat: $e.coords.lat,
+    //   lng: $e.coords.lng
+    // });
+
+    // console.log(this.polyPath);
+    // let geopoint = new fb.firestore.GeoPoint($e.coords.lat, $e.coords.lng);
+    // this.db.collection('markers').add({ geopoint: geopoint });
+  }
+
+  polyClick(path, event) {
+    // console.log(path, event);
+    // console.log(event.latLng.lat());
+    // console.log(event.latLng.lng());
+  }
+
+  polyMouseUp(path, event) {
+    console.log(event);
+    if (event.vertex) {
+      path.points[event.vertex] = {
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng()
+      }
+    }
+    else if (event.edge) {
+      path.points.splice(path.points[event.edge], 0, {
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng()
+      });
+    }
+    console.log(path);
   }
 
   showPosition(position) {

@@ -11,11 +11,13 @@ import { AppComponent } from './app.component';
 
 //  Misc. Imports
 import { environment } from '../environments/environment';
+import { PolygonComponent } from './polygon/polygon.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PolygonComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase, 'bim-earth'),
