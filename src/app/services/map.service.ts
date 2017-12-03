@@ -47,6 +47,10 @@ export class MapService {
     return this.getPolygonById(polygon.id).update(polygon);
   }
 
+  setActivePolygon(polygon) {
+    return this.getPolygonById('active').set(polygon);
+  }
+
   deletePolygon(id: string) {
     return this.getPolygonById(id).delete();
   }

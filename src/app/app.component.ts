@@ -55,6 +55,10 @@ export class AppComponent {
     mapComponent.saveActivePolygon();
   }
 
+  removeActivePolygon(mapComponent) {
+    mapComponent.removeActivePolygon();
+  }
+
   mapClick($e) {
     // this.path.push({
     //   lat: $e.coords.lat,
