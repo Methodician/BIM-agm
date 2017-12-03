@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
+import * as fb from 'firebase';
 
 @Injectable()
 export class MapService {
@@ -45,6 +46,17 @@ export class MapService {
 
   updatePolygon(polygon) {
     return this.getPolygonById(polygon.id).update(polygon);
+  }
+
+  updatePolygonPaths(polygon) {
+    const newPolygon = { ...polygon };
+    polygon.paths = fb.firestore.FieldValue.delete();
+    const polyRef = this.getPolygonById(polygon.id).ref;
+    let batch = this.db.firestore.batch();
+    batch.update(polyRef, polygon);
+    batch.update(polyRef, newPolygon);
+    return batch.commit();
+    // return this.getPolygonById(polygon.id).update(polygon);
   }
 
   setActivePolygon(polygon) {
