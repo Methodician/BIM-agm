@@ -12,12 +12,17 @@ import { AppComponent } from './app.component';
 //  Misc. Imports
 import { environment } from '../environments/environment';
 import { PolygonComponent } from './polygon/polygon.component';
+import { MapComponent } from './components/map/map.component';
+import { PointService } from './services/point.service';
+import { PolygonService } from './services/polygon.service';
+import { MapService } from './services/map.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PolygonComponent
+    PolygonComponent,
+    MapComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase, 'bim-earth'),
@@ -28,7 +33,11 @@ import { PolygonComponent } from './polygon/polygon.component';
     }),
     BrowserModule
   ],
-  providers: [],
+  providers: [
+    PointService,
+    PolygonService,
+    MapService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

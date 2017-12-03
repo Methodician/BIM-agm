@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { LatLng } from '@agm/core/services/google-maps-types';
 import * as fb from 'firebase';
 import { AgmPolygon } from '@agm/core/directives/polygon';
+import { MapService } from './services/map.service';
 
 @Component({
   selector: 'app-root',
@@ -11,19 +12,23 @@ import { AgmPolygon } from '@agm/core/directives/polygon';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  lat: number = 51.678418;
-  lng: number = 7.809007;
-  markers: Observable<any>;
+  // @ViewChild('map') map;
+
   pathDoc: AngularFirestoreDocument<any>;
   pathsCollection: Observable<any>;
   path = [];
   polyTest: AgmPolygon;
 
-  constructor(private db: AngularFirestore) {
+  constructor(
+    //  Remove this:
+    private db: AngularFirestore
+  ) {
   }
 
   ngOnInit() {
-    this.markers = this.db.collection('markers').valueChanges();
+
+
+    //  Experiments:
     this.pathDoc = this.db.doc('polyPaths/path4');
     this.pathsCollection = this.db.collection('polyPaths').valueChanges();
     this.pathDoc.valueChanges().subscribe(path => {
@@ -33,23 +38,29 @@ export class AppComponent {
   }
 
   ngAfterViewInit() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => this.showPosition(position));
-    }
-    else {
-      alert('Geolocation is not supported by this browser.');
-    }
+
+    //  Deprecated?
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition((position) => this.showPosition(position));
+    // }
+    // else {
+    //   alert('Geolocation is not supported by this browser.');
+    // }
     // this.db.collection('markers').valueChanges().subscribe((markers: any) => {
     //   this.markers = markers;
     // });
   }
 
+  saveActivePolygon(mapComponent) {
+    mapComponent.saveActivePolygon();
+  }
+
   mapClick($e) {
-    this.path.push({
-      lat: $e.coords.lat,
-      lng: $e.coords.lng
-    });
-    this.pathDoc.set({ points: this.path });
+    // this.path.push({
+    //   lat: $e.coords.lat,
+    //   lng: $e.coords.lng
+    // });
+    // this.pathDoc.set({ points: this.path });
     // this.polyPath.push({
     //   lat: $e.coords.lat,
     //   lng: $e.coords.lng
@@ -83,9 +94,9 @@ export class AppComponent {
     console.log(path);
   }
 
-  showPosition(position) {
-    this.lat = position.coords.latitude;
-    this.lng = position.coords.longitude;
-  }
+  // showPosition(position) {
+  //   this.lat = position.coords.latitude;
+  //   this.lng = position.coords.longitude;
+  // }
 
 }

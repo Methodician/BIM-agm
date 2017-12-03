@@ -1,14 +1,2 @@
-<agm-map style="height: 90vh;" [latitude]="lat" [longitude]="lng" (mapClick)="mapClick($event)">
-  <!-- <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker> -->
-  <agm-marker *ngFor="let marker of markers | async" [latitude]="marker.geopoint._lat" [longitude]="marker.geopoint._long"></agm-marker>
-  <agm-polygon *ngIf="path" [paths]="path"></agm-polygon>
-  <agm-polygon *ngFor="let path of pathsCollection | async" [paths]="path.points" [editable]="true" (polyClick)="polyClick(path, $event)"
-    (polyMouseUp)="polyMouseUp(path, $event)"></agm-polygon>
-</agm-map>
-
-<!-- <pre>
-    {{ (path1 | async).points | json }}
-</pre> -->
-<!-- <pre *ngFor="let marker of markers | async">
-    lat: {{ marker.geopoint._lat }} long: {{ marker.geopoint._long }}
-</pre> -->
+<app-map #map [markers]="markers"></app-map>
+<button (click)="saveActivePolygon(map)">save active polygon</button>
