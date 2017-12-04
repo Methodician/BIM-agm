@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { MapService } from '../../services/map.service';
+import { MapService } from '@services/map.service';
 import * as fb from 'firebase';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { google } from '@agm/_dev/packages/core/services/google-maps-types';
-import { Polygon } from '../../models/polygon';
+import { Polygon } from '@models/polygon';
 
 @Component({
   selector: 'app-map',
