@@ -12,8 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@agm/_dev": "git+https://git@github.com/SebastianM/angular-google-maps.git",
-    "@agm/dummy": "git+https://git@github.com/chromacoma/angular-google-maps.git",
+    "@agm/_dev": "git+https://git@github.com/sebastianm/angular-google-maps.git",
     "@angular/animations": "^5.0.0",
     "@angular/common": "^5.0.0",
     "@angular/compiler": "^5.0.0",
