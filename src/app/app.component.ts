@@ -59,6 +59,22 @@ export class AppComponent {
     mapComponent.removeActivePolygon();
   }
 
+  startCreatePolygon(mapComponent) {
+    mapComponent.startCreatePolygon();
+  }
+
+  startCreatingMarkers(mapComponent) {
+    mapComponent.startCreatingMarkers();
+  }
+
+  stopCreatingMarkers(mapComponent) {
+    mapComponent.stopCreatingMarkers();
+  }
+
+  startMarkerStresstest(mapComponent) {
+    mapComponent.startMarkerStresstest();
+  }
+
   mapClick($e) {
     // this.path.push({
     //   lat: $e.coords.lat,
