@@ -76,7 +76,7 @@ export class MapComponent implements OnInit {
   }
 
 
-  polyPathChanged(polygon, e, index) {
+  polyPathChange(e) {
     if (this.config.isEditingPolygon) {
       this.getPathFromChange(e).then(paths => {
         this.activePaths = paths;
@@ -150,7 +150,7 @@ export class MapComponent implements OnInit {
     if (this.activePolygon.id) {
       this.mapSvc.updatePolygon(this.activePolygon)
         .then(success => {
-          console.log('Active polygon edits sved to database.', this.activePolygon.id);
+          console.log('Active polygon edits sved to database.', this.activePolygon);
         })
     }
     else {
