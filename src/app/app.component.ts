@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { LatLng } from '@agm/core/services/google-maps-types';
+import { LatLng } from '@agm/dummy/packages/core/services/google-maps-types';
 import * as fb from 'firebase';
-import { AgmPolygon } from '@agm/core/directives/polygon';
+import { AgmPolygon } from '@agm/_dev/packages/core/directives/polygon';
 import { MapService } from './services/map.service';
 
 @Component({

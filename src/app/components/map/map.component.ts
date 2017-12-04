@@ -3,7 +3,7 @@ import { MapService } from '../../services/map.service';
 import * as fb from 'firebase';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { google } from '@agm/core/services/google-maps-types';
+import { google } from '@agm/_dev/packages/core/services/google-maps-types';
 
 @Component({
   selector: 'app-map',
@@ -20,6 +20,7 @@ export class MapComponent implements OnInit {
   activePolyDoc;
   activePolygon;
   activePolygon$: BehaviorSubject<any> = new BehaviorSubject<any>({ paths: [] });
+  polygonForUpdate;
   activePaths = [];
 
   config = {
@@ -74,56 +75,57 @@ export class MapComponent implements OnInit {
     }
   }
 
-  // polyClick(polygon, e) {
-  //   console.log('polygon:', polygon);
-  //   console.log('event:', e);
-  // }
+
+  polyPathChanged(polygon, e, index) {
+    if (this.config.isEditingPolygon) {
+      this.getPathFromChange(e).then(paths => {
+        this.activePaths = paths;
+      });
+    }
+
+  }
+
+  getPathFromChange(pathChangeEvent) {
+    return pathChangeEvent.then(e => {
+      return e.map((item, index) => {
+        return {
+          lat: item.lat(),
+          lng: item.lng()
+        }
+      });
+    });
+  }
 
   polyMouseUp(polygon, e, index) {
     console.log('polygon:', polygon);
-    console.log('event:', e);
-    console.log('index:', index);
+    // console.log('event:', e);
+    // console.log('index:', index);
     if (!this.config.isEditingPolygon) {
-      console.log(this.polygons);
+      // console.log(this.polygons);
       this.config.isEditingPolygon = true;
       this.activePolygon = this.polygons[index];
-      // this.activePolygon.isBeingEdited = true;
-      // this.polygons[index].isBeingEdited = true;
       this.activePolygon$.next(this.activePolygon);
       this.polygons.splice(index, 1);
       this.polygons$.next(this.polygons);
-      console.log(this.polygons);
+      // console.log(this.polygons);
     }
     else {
-      // if (e.vertex) {
-      //   this.activePolygon.paths[e.vertex] = {
-      //     lat: e.latLng.lat(),
-      //     lng: e.latLng.lng()
-      //   }
-      //   this.activePolygon$.next(this.activePolygon);
-      // }
-      // else if (e.edge) {
-      //   this.activePolygon.paths.splice(this.activePolygon.paths[e.edge], 0, {
-      //     lat: e.latLng.lat(),
-      //     lng: e.latLng.lng()
-      //   });
-      //   this.activePolygon$.next(this.activePolygon);
-      // }
+
     }
 
   }
 
   activePolyMouseUp(e) {
-    const lat = e.latLng.lat();
-    const lng = e.latLng.lng();
-    if (e.vertex != undefined) {
-      this.activePolygon.paths[e.vertex] = { lat, lng };
-      this.activePolygon$.next(this.activePolygon);
-    }
-    else if (e.edge != undefined) {
-      this.activePolygon.paths.splice(this.activePolygon.paths[e.edge], 0, { lat, lng });
-      this.activePolygon$.next(this.activePolygon);
-    }
+    // const lat = e.latLng.lat();
+    // const lng = e.latLng.lng();
+    // if (e.vertex != undefined) {
+    //   this.activePolygon.paths[e.vertex] = { lat, lng };
+    //   this.activePolygon$.next(this.activePolygon);
+    // }
+    // else if (e.edge != undefined) {
+    //   this.activePolygon.paths.splice(this.activePolygon.paths[e.edge], 0, { lat, lng });
+    //   this.activePolygon$.next(this.activePolygon);
+    // }
   }
 
   addMarker(e) {
@@ -142,6 +144,9 @@ export class MapComponent implements OnInit {
   // }
 
   saveActivePolygon() {
+    this.config.isEditingPolygon = false;
+    this.config.isAddingPolygon = false;
+    this.activePolygon.paths = this.activePaths
     if (this.activePolygon.id) {
       this.mapSvc.updatePolygon(this.activePolygon)
         .then(success => {
@@ -160,8 +165,6 @@ export class MapComponent implements OnInit {
     }
     this.activePolygon = { paths: [] };
     this.activePolygon$.next(this.activePolygon);
-    this.config.isEditingPolygon = false;
-    this.config.isAddingPolygon = false;
   }
 
   removeActivePolygon() {
