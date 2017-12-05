@@ -4,6 +4,8 @@ import * as fb from 'firebase';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { google } from '@agm/_dev/packages/core/services/google-maps-types';
+// if add this to tsconfig.json: "@agm/core/*": ["../node_modules/@agm/_dev/packages/core/*"] then can do following...
+// import { google } from '@agm/core/services/google-maps-types';
 import { Polygon } from '@models/polygon';
 
 @Component({
@@ -41,6 +43,7 @@ export class MapComponent implements OnInit {
     // this.markersCollection = this.mapSvc.getMarkers();
     this.mapSvc.getMarkers().valueChanges().subscribe(markers => {
       this.markers = markers;
+      console.log(markers.length);
     });
     this.mapSvc.getPolygons().valueChanges().subscribe((polygons: Polygon[]) => {
       this.polygons = polygons;
@@ -87,7 +90,7 @@ export class MapComponent implements OnInit {
     const minLat = 25.4;
     const maxLng = -66.75;
     const minLng = -124.85;
-    for (let i = 1; i < 200; i++) {
+    setInterval(() => {
       const lat = rand() * (maxLat - minLat) + minLat;
       const lng = rand() * (maxLng - minLng) + minLng;
       const event = {
@@ -96,8 +99,19 @@ export class MapComponent implements OnInit {
         }
       };
       this.addMarker(event);
-    }
-    console.log('stress test done');
+      console.log(event);
+    }, 200)
+    // for (let i = 1; i < 200; i++) {
+    //   const lat = rand() * (maxLat - minLat) + minLat;
+    //   const lng = rand() * (maxLng - minLng) + minLng;
+    //   const event = {
+    //     coords: {
+    //       lat, lng
+    //     }
+    //   };
+    //   this.addMarker(event);
+    // }
+    // console.log('stress test done');
     // this.stopCreatingMarkers();
   }
 

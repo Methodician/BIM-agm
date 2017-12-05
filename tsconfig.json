@@ -6,7 +6,8 @@
     "paths": {
       "@app/*": ["app/*"],
       "@models/*": ["app/models/*"],
-      "@services/*": ["app/services/*"]
+      "@services/*": ["app/services/*"],
+      "@agm/*": ["../node_modules/@agm/_dev/packages/*"]
     },
     "sourceMap": true,
     "declaration": false,
@@ -24,6 +25,7 @@
   },
   "include": [
     "src/**/*",
-    "node_modules/@agm/_dev/packages/core/index.ts"
+    "node_modules/@agm/_dev/packages/core/index.ts",
+    "node_modules/@agm/_dev/packages/js-marker-clusterer/index.ts"
   ]
 }
