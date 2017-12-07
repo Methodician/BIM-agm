@@ -9,14 +9,14 @@ import { AgmJsMarkerClustererModule } from '@agm/_dev/packages/js-marker-cluster
 
 //  Comopnent Imports
 import { AppComponent } from './app.component';
+import { MapComponent } from './components/map/map.component';
 
 //  Misc. Imports
 import { environment } from '../environments/environment';
-import { MapComponent } from './components/map/map.component';
 import { PointService } from './services/point.service';
 import { PolygonService } from './services/polygon.service';
 import { MapService } from './services/map.service';
-// import { ClusterManager } from '@agm/_dev/packages/js-marker-clusterer/services/managers/cluster-manager';
+import { ClusterManager } from '@agm/_dev/packages/js-marker-clusterer/services/managers/cluster-manager';
 // import { GoogleMapsAPIWrapper } from '@agm/_dev/packages/core/services/google-maps-api-wrapper';
 
 
@@ -39,7 +39,7 @@ import { MapService } from './services/map.service';
     PointService,
     PolygonService,
     MapService,
-    // ClusterManager
+    ClusterManager
     // GoogleMapsAPIWrapper
   ],
   bootstrap: [AppComponent]

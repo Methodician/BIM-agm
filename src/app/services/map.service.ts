@@ -13,7 +13,7 @@ export class MapService {
   //  Might refactor code to marker and polygon services...
 
   getMarkers() {
-    return this.db.collection('markers');
+    return this.db.collection('markers2');
   }
 
   getMarkerById(id: string) {

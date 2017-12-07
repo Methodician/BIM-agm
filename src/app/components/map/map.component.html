@@ -3,7 +3,8 @@
     <agm-marker *ngFor="let marker of markers" [latitude]="marker.geopoint._lat" [longitude]="marker.geopoint._long"></agm-marker>
   </agm-marker-cluster>
   <agm-polygon id="activePolygon" *ngIf="shouldShowActivePolygon()" [paths]="(activePolygon$ | async).paths" (polyMouseUp)="activePolyMouseUp($event)"
-    [editable]="true" (polyPathChange)="polyPathChange($event)"></agm-polygon>
+    [editable]="true" [polyDraggable]="true" (polyPathChange)="polyPathChange($event)"></agm-polygon>
   <!-- <agm-polygon *ngIf="config.isEditingPolygon" [(paths)]="activePolygon.paths" (polyMouseUp)="activePolyMouseUp($event)" [editable]="true"></agm-polygon> -->
-  <agm-polygon *ngFor="let polygon of polygons$ | async; let i = index" [paths]="polygon.paths" (polyMouseUp)="polyMouseUp(polygon, $event, i)"></agm-polygon>
+  <agm-polygon *ngFor="let polygon of polygons$ | async; let i = index" [paths]="polygon.paths" [fillOpacity]="0.25" [fillColor]="'#00AAD9'" [strokeColor]="'#00AAD9'"
+    (polyMouseUp)="polyMouseUp(polygon, $event, i)"></agm-polygon>
 </agm-map>
