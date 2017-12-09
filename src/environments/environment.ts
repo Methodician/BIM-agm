@@ -5,12 +5,13 @@
 
 export const environment = {
   production: false,
-  firebase: {
+  firebaseConfig: {
     apiKey: "AIzaSyBVhiA0_4TJvz8WmSQr6SE0OsdTNnIFSqM",
     authDomain: "bim-earth-dev.firebaseapp.com",
     databaseURL: "https://bim-earth-dev.firebaseio.com",
     projectId: "bim-earth-dev",
     storageBucket: "bim-earth-dev.appspot.com",
     messagingSenderId: "720001690050"
-  }
+  },
+  googleMapsKey: 'AIzaSyChU-B6alfi0jRmSeYMqbenOVpbDo6DYNM'
 };

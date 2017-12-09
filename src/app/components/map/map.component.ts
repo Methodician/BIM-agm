@@ -42,17 +42,17 @@ export class MapComponent implements OnInit {
 
     // this.markersCollection = this.mapSvc.getMarkers();
     this.mapSvc.getMarkers().valueChanges().subscribe(markers => {
-      this.markers = markers;
       console.log(markers.length);
+      this.markers = markers;
     });
     this.mapSvc.getPolygons().valueChanges().subscribe((polygons: Polygon[]) => {
       this.polygons = polygons;
       this.polygons$.next(polygons);
     });
 
-    this.activePolygon$.subscribe(polygon => {
-      console.log(polygon);
-    });
+    // this.activePolygon$.subscribe(polygon => {
+    //   console.log(polygon);
+    // });
   }
 
   ngAfterViewInit() {

@@ -17,20 +17,25 @@ import { PointService } from './services/point.service';
 import { PolygonService } from './services/polygon.service';
 import { MapService } from './services/map.service';
 import { ClusterManager } from '@agm/_dev/packages/js-marker-clusterer/services/managers/cluster-manager';
+import { GeofireMapComponent } from './components/geofire-map/geofire-map.component';
+import { GeoService } from '@app/services/geo.service';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 // import { GoogleMapsAPIWrapper } from '@agm/_dev/packages/core/services/google-maps-api-wrapper';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    MapComponent
+    MapComponent,
+    GeofireMapComponent
   ],
   imports: [
-    AngularFireModule.initializeApp(environment.firebase, 'bim-earth'),
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'bim-earth'),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AngularFireDatabaseModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyChU-B6alfi0jRmSeYMqbenOVpbDo6DYNM'
+      apiKey: environment.googleMapsKey
     }),
     AgmJsMarkerClustererModule,
     BrowserModule
@@ -38,8 +43,9 @@ import { ClusterManager } from '@agm/_dev/packages/js-marker-clusterer/services/
   providers: [
     PointService,
     PolygonService,
-    MapService,
-    ClusterManager
+    MapService,,
+    GeoService,
+    ClusterManager,
     // GoogleMapsAPIWrapper
   ],
   bootstrap: [AppComponent]

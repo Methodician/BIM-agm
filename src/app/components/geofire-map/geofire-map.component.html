@@ -1,0 +1,12 @@
+<div *ngIf="lat && lng">
+  <agm-map (mapClick)="mapClick($event)" style="height: 90vh;" [latitude]="lat" [longitude]="lng">
+    <agm-marker *ngFor="let marker of markers"
+      [latitude]="marker.location[0]"
+      [longitude]="marker.location[1]">
+      <agm-info-window>
+          <h3><strong>Location Details</strong></h3>
+          <p>You are {{ marker.distance }} kilometers from this point</p>
+      </agm-info-window>
+    </agm-marker>
+  </agm-map>
+<div>
