@@ -7,4 +7,10 @@
   <!-- <agm-polygon *ngIf="config.isEditingPolygon" [(paths)]="activePolygon.paths" (polyMouseUp)="activePolyMouseUp($event)" [editable]="true"></agm-polygon> -->
   <agm-polygon *ngFor="let polygon of polygons$ | async; let i = index" [paths]="polygon.paths" [fillOpacity]="0.25" [fillColor]="'#00AAD9'" [strokeColor]="'#00AAD9'"
     (polyMouseUp)="polyMouseUp(polygon, $event, i)"></agm-polygon>
+
+  <agm-data-layer *ngFor="let feature of jsonImport.features" [geoJson]="feature" (layerClick)="layerClick($event, feature)"></agm-data-layer>
 </agm-map>
+
+<!-- <pre>
+  {{ jsonImport | json }}
+</pre> -->

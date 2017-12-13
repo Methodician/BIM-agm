@@ -7,6 +7,7 @@ import { google } from '@agm/_dev/packages/core/services/google-maps-types';
 // if add this to tsconfig.json: "@agm/core/*": ["../node_modules/@agm/_dev/packages/core/*"] then can do following...
 // import { google } from '@agm/core/services/google-maps-types';
 import { Polygon } from '@models/polygon';
+import { JsonImportService } from '@app/services/json-import.service';
 
 @Component({
   selector: 'app-map',
@@ -26,6 +27,8 @@ export class MapComponent implements OnInit {
   polygonForUpdate;
   activePaths = [];
 
+  jsonImport: Object;
+
   config = {
     isAddingMarkers: false,
     isAddingPolygon: false,
@@ -35,10 +38,13 @@ export class MapComponent implements OnInit {
 
   constructor(
     private mapSvc: MapService,
-
+    private jsonSvc: JsonImportService
   ) { }
 
   ngOnInit() {
+    const jsonObject = this.jsonSvc.getData();
+    this.jsonImport = jsonObject;
+    console.log(this.jsonImport);
 
     // this.markersCollection = this.mapSvc.getMarkers();
     this.mapSvc.getMarkers().valueChanges().subscribe(markers => {
@@ -64,6 +70,16 @@ export class MapComponent implements OnInit {
     else {
       alert('Geolocation is not supported by this browser.');
     }
+  }
+
+  layerClick(e, json){
+    console.log(json);
+    // console.log(e);
+    // const feature = e.feature;
+    // const lat = e.latLng.lat();
+    // const lng = e.latLng.lng();
+    // console.log('feature', feature);
+    // console.log('lat and lng', lat, lng);
   }
 
   startCreatePolygon() {
@@ -158,6 +174,7 @@ export class MapComponent implements OnInit {
       this.config.isEditingPolygon = true;
       this.activePolygon = this.polygons[index];
       this.activePolygon$.next(this.activePolygon);
+      this.activePaths = this.activePolygon$.value.paths;
       this.polygons.splice(index, 1);
       this.polygons$.next(this.polygons);
       // console.log(this.polygons);

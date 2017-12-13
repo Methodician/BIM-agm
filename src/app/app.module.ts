@@ -20,6 +20,7 @@ import { ClusterManager } from '@agm/_dev/packages/js-marker-clusterer/services/
 import { GeofireMapComponent } from './components/geofire-map/geofire-map.component';
 import { GeoService } from '@app/services/geo.service';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { JsonImportService } from '@app/services/json-import.service';
 // import { GoogleMapsAPIWrapper } from '@agm/_dev/packages/core/services/google-maps-api-wrapper';
 
 
@@ -43,7 +44,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
   providers: [
     PointService,
     PolygonService,
-    MapService,,
+    MapService,
+    JsonImportService,
     GeoService,
     ClusterManager,
     // GoogleMapsAPIWrapper
