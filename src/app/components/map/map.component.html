@@ -1,14 +1,14 @@
 <agm-map style="height: 90vh;" [latitude]="mapCenter?.lat" [longitude]="mapCenter?.lng" (mapClick)="mapClick($event)">
   <!-- <agm-marker-cluster imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m"> -->
-    <agm-marker *ngFor="let marker of markers" [latitude]="marker.geopoint._lat" [longitude]="marker.geopoint._long"></agm-marker>
+  <agm-marker *ngFor="let marker of markers" [latitude]="marker.geopoint._lat" [longitude]="marker.geopoint._long"></agm-marker>
   <!-- </agm-marker-cluster> -->
   <agm-polygon id="activePolygon" *ngIf="shouldShowActivePolygon()" [paths]="(activePolygon$ | async).paths" (polyMouseUp)="activePolyMouseUp($event)"
     [editable]="true" [polyDraggable]="true" (polyPathChange)="polyPathChange($event)"></agm-polygon>
   <!-- <agm-polygon *ngIf="config.isEditingPolygon" [(paths)]="activePolygon.paths" (polyMouseUp)="activePolyMouseUp($event)" [editable]="true"></agm-polygon> -->
-  <agm-polygon *ngFor="let polygon of polygons$ | async; let i = index" [paths]="polygon.paths" [fillOpacity]="0.25" [fillColor]="'#00AAD9'" [strokeColor]="'#00AAD9'"
-    (polyMouseUp)="polyMouseUp(polygon, $event, i)"></agm-polygon>
+  <agm-polygon *ngFor="let polygon of polygons$ | async; let i = index" [paths]="polygon.paths" [fillOpacity]="0.25" [fillColor]="'#00AAD9'"
+    [strokeColor]="'#00AAD9'" (polyMouseUp)="polyMouseUp(polygon, $event, i)"></agm-polygon>
 
-  <agm-data-layer *ngFor="let feature of jsonImport.features" [geoJson]="feature" (layerClick)="layerClick($event, feature)"></agm-data-layer>
+  <!-- <agm-data-layer *ngFor="let feature of jsonImport.features" [geoJson]="feature" (layerClick)="layerClick($event, feature)"></agm-data-layer> -->
 </agm-map>
 
 <!-- <pre>

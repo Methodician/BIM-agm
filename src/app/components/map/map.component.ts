@@ -7,7 +7,7 @@ import { google } from '@agm/_dev/packages/core/services/google-maps-types';
 // if add this to tsconfig.json: "@agm/core/*": ["../node_modules/@agm/_dev/packages/core/*"] then can do following...
 // import { google } from '@agm/core/services/google-maps-types';
 import { Polygon } from '@models/polygon';
-import { JsonImportService } from '@app/services/json-import.service';
+// import { JsonImportService } from '@app/services/json-import.service';
 
 @Component({
   selector: 'app-map',
@@ -38,13 +38,13 @@ export class MapComponent implements OnInit {
 
   constructor(
     private mapSvc: MapService,
-    private jsonSvc: JsonImportService
+    // private jsonSvc: JsonImportService
   ) { }
 
   ngOnInit() {
-    const jsonObject = this.jsonSvc.getData();
-    this.jsonImport = jsonObject;
-    console.log(this.jsonImport);
+    // const jsonObject = this.jsonSvc.getData();
+    // this.jsonImport = jsonObject;
+    // console.log(this.jsonImport);
 
     // this.markersCollection = this.mapSvc.getMarkers();
     this.mapSvc.getMarkers().valueChanges().subscribe(markers => {
@@ -72,7 +72,7 @@ export class MapComponent implements OnInit {
     }
   }
 
-  layerClick(e, json){
+  layerClick(e, json) {
     console.log(json);
     // console.log(e);
     // const feature = e.feature;
