@@ -5,7 +5,8 @@ import { GmapCircle } from './gmap-circle';
 import { GmapPolygon } from './gmap-polygon';
 import { GmapRectangle } from './gmap-rectangle';
 import { ChangeDetectorRef } from '@angular/core';
-declare var google: any;
+// import { google } from '@agm/_dev/packages/core/services/google-maps-types';
+//  declare var google: any;
 export class GmapDrawingManager extends google.maps.drawing.DrawingManager {
 
     public circles = new Array<GmapCircle>();
